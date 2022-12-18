@@ -1,8 +1,16 @@
 import React from 'react'
+import styled from 'styled-components'
+
+const ShopWrap = styled.section`
+
+`
 
 const Shop = () => {
+
+  
   return (
-    <div>Shop</div>
+    <ShopWrap>
+    </ShopWrap>
   )
 }
 

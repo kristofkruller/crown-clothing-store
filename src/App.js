@@ -1,19 +1,24 @@
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
-import Categories from "./components/Categories";
 import Navigation from "./components/Navigation";
-import Shop from "./components/Shop";
+import Spinner from "./components/Spinner";
 
+const Categories = lazy(() => import("./components/Categories"));
+const Shop = lazy(() => import("./components/Shop"));
+const SignIn = lazy(() => import("./components/SignIn"));
 
 const App = () => {
 
   return (
-    <Routes>
-      <Route path="/" element={<Navigation />}>
-        <Route index={true} element={<Categories />}/>
-        <Route path="shop" element={<Shop />}/>
-      </Route>
-    </Routes>
+    <Suspense fallback={<Spinner />}>
+      <Routes>
+        <Route path="/" element={<Navigation />}>
+          <Route index={true} element={<Categories />}/>
+          <Route path="shop" element={<Shop />}/>
+          <Route path="sign-in" element={<SignIn />}/>
+        </Route>
+      </Routes>
+    </Suspense>
   );
 };
 
