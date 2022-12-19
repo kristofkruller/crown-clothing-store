@@ -1,11 +1,11 @@
 import React, { lazy, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
-import Navigation from "./components/Navigation";
 import Spinner from "./components/Spinner";
 
+const Navigation = lazy(() => import("./components/Navigation"));
 const Categories = lazy(() => import("./components/Categories"));
 const Shop = lazy(() => import("./components/Shop"));
-const SignIn = lazy(() => import("./components/SignIn"));
+const Auth = lazy(() => import("./components/auth/Auth"));
 
 const App = () => {
 
@@ -15,7 +15,7 @@ const App = () => {
         <Route path="/" element={<Navigation />}>
           <Route index={true} element={<Categories />}/>
           <Route path="shop" element={<Shop />}/>
-          <Route path="sign-in" element={<SignIn />}/>
+          <Route path="auth" element={<Auth />}/>
         </Route>
       </Routes>
     </Suspense>

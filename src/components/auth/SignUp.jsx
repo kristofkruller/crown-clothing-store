@@ -1,6 +1,18 @@
 import React, { useState } from "react";
-import { authWithEmailPass, authDocument } from "../assets/firebase/firebase";
-import InputForm from "./InputForm";
+import { authWithEmailPass, authDocument } from "../../assets/firebase/firebase";
+import InputForm from "../tools/InputForm";
+import Btn from "../tools/Btn";
+import styled from "styled-components";
+
+const SignUpWrap = styled.section`
+    display: flex;
+    flex-direction: column;
+    width: 35%;
+
+    h2 {
+        margin: 10px 0;
+    }
+`
 
 const fieldTemplate = {
   displayName: "",
@@ -40,8 +52,9 @@ const SignUp = () => {
   };
 
   return (
-    <>
-      <h1>Sign up with your email and password</h1>
+    <SignUpWrap>
+      <h2>I do not have an account</h2>
+      <span>Sign up with your email and password</span>
 
       <form onSubmit={submitChange}>
         <InputForm
@@ -81,9 +94,9 @@ const SignUp = () => {
         />
 
         {/* submit btn auto connects with onsubmit func */}
-        <button type="submit">Sign Up</button>
+        <Btn buttonType="default" type="submit">Sign Up</Btn>
       </form>
-    </>
+    </SignUpWrap>
   );
 };
 
