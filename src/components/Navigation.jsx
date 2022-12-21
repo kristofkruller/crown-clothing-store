@@ -1,7 +1,10 @@
-import React from 'react'
+import React, {useContext} from 'react'
+import {UserContext} from "../context/UserContext";
+
 import { Outlet, Link } from 'react-router-dom'
 import styled from 'styled-components';
 import {ReactComponent as Logo} from "../assets/crown.svg"
+import { signOutUser } from '../assets/firebase/firebase';
 
 const Nav = styled.section`
     height: 70px;
@@ -31,6 +34,13 @@ const Nav = styled.section`
 `
 
 const Navigation = () => {
+
+  const { user } = useContext(UserContext);
+
+  const signOutUserHandler = async () => {
+    await signOutUser();
+  }
+
   return (
     <>
         <Nav className='navigation'>
@@ -41,9 +51,14 @@ const Navigation = () => {
                 <Link className='nav-link' to='/shop'>
                     SHOP
                 </Link>
-                <Link className='nav-link' to='/auth'>
-                    SIGN IN
-                </Link>
+                {user ? 
+                  <span className='nav-link' onClick={signOutUserHandler}> SIGN OUT</span> 
+                  :
+                  <Link className='nav-link' to='/auth'>
+                      SIGN IN
+                  </Link>
+                }
+                
             </div>
         </Nav>
         <Outlet />

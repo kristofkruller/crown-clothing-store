@@ -1,11 +1,12 @@
 import React, { useState } from "react";
+
+import styled from "styled-components";
 import {
-  authDocument,
   signInWithEmailPass,
   signInWithGooglePopup,
 } from "../../assets/firebase/firebase";
+
 import Btn from "../tools/Btn";
-import styled from "styled-components";
 import InputForm from "../tools/InputForm";
 
 const SignInWrap = styled.section`
@@ -30,8 +31,7 @@ const SignIn = () => {
   const resetFields = () => setFields(fieldTemplate);
 
   const googleSignIn = async () => {
-    const { user } = await signInWithGooglePopup();
-    await authDocument(user);
+    await signInWithGooglePopup();
   };
 
   const submitChange = async (event) => {
@@ -39,6 +39,7 @@ const SignIn = () => {
 
     try {
       await signInWithEmailPass(email, password);
+
       resetFields();
     } catch (error) {
       switch (error.code) {

@@ -1,5 +1,5 @@
 import React from 'react'
-import "../assets/inputForm.scss"
+import "../../assets/inputForm.scss"
 
 const InputForm = ({label, ...inputFields}) => {
   return (

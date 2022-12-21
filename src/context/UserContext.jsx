@@ -1,4 +1,5 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
+import { authStateObserver, authDocument } from "../assets/firebase/firebase";
 
 //default value u want to access
 export const UserContext = createContext({
@@ -10,6 +11,23 @@ export const UserContext = createContext({
 export const UserProvider = ({children}) => {
 
     const [user, setUser] = useState(null);
+
+    useEffect(() => {
+
+      //The authStateObserver returns the unsubscribe function for the observer.
+
+      const unsubsribeAuth = authStateObserver(  user => {
+        
+        if (user) authDocument(user);
+
+        setUser(user);
+      
+      });
+
+      return unsubsribeAuth;
+      
+    }, [])
+    
 
     //object what passes the accessible values
     const value = { user, setUser }
