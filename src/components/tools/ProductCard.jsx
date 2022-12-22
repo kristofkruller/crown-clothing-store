@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import Btn from './tools/Btn'
+import Btn from './Btn'
 
 const ShopWrap = styled.section`
   width: 100%;

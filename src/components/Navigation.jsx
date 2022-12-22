@@ -3,8 +3,11 @@ import {UserContext} from "../context/UserContext";
 
 import { Outlet, Link } from 'react-router-dom'
 import styled from 'styled-components';
-import {ReactComponent as Logo} from "../assets/crown.svg"
 import { signOutUser } from '../assets/firebase/firebase';
+
+import {ReactComponent as Logo} from "../assets/crown.svg"
+import CartIcon from './tools/CartIcon';
+import CartDropDown from './tools/CartDropDown';
 
 const Nav = styled.section`
     height: 70px;
@@ -58,8 +61,9 @@ const Navigation = () => {
                       SIGN IN
                   </Link>
                 }
-                
+              <CartIcon />  
             </div>
+            <CartDropDown />
         </Nav>
         <Outlet />
     </>

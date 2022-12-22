@@ -10,12 +10,7 @@ export const ProductContext = createContext({
 //the actual component
 export const ProductProvider = ({children}) => {
 
-    const [products, setProducts] = useState(ShopData);
-
-    useEffect(() => {
-      console.log(ShopData)
-    }, [])
-    
+    const [products, setProducts] = useState(ShopData); 
 
     //object what passes the accessible values
     const value = { products, setProducts }

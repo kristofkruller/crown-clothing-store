@@ -1,7 +1,7 @@
 import React, {useContext} from 'react'
 import styled from 'styled-components'
 import { ProductContext } from '../context/ProductContext'
-import ProductCard from './ProductCard'
+import ProductCard from './tools/ProductCard'
 
 const GridShop = styled.section`
   display: grid;
