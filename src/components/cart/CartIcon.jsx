@@ -28,7 +28,7 @@ const IconWrapp = styled.div`
 const CartIcon = () => {
 
   const { open, setOpen } = useContext(CartStateContext)
-  const opener = () => !open ? setOpen(true) : setOpen(false)
+  const opener = () => setOpen(!open)
 
   return (
     <IconWrapp onClick={opener}>

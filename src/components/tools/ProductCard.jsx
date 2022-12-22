@@ -1,4 +1,5 @@
-import React from 'react'
+import React, {useContext} from 'react'
+import { CartStateContext } from '../../context/CartState'
 import styled from 'styled-components'
 import Btn from './Btn'
 
@@ -55,6 +56,9 @@ const ShopWrap = styled.section`
 `
 const ProductCard = ({ product }) => {
   const { name, price, imageUrl } = product;
+  const { infuseItem } = useContext(CartStateContext)
+
+  const addToCart = () => infuseItem(product)
 
   return (
    
@@ -64,7 +68,7 @@ const ProductCard = ({ product }) => {
         <span className='name'>{name}</span>
         <span className='price'>{price}</span>
       </div>
-      <Btn buttonType="inverted">Add to cart</Btn>
+      <Btn buttonType="inverted" onClick={addToCart}>Add to cart</Btn>
     </ShopWrap>  
   )
 }

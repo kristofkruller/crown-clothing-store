@@ -1,8 +1,9 @@
 import React, {useContext} from 'react'
-import styled from 'styled-components'
-import Btn from './Btn'
 import { CartStateContext } from '../../context/CartState'
+import styled from 'styled-components'
 
+import Btn from '../tools/Btn'
+import CartItem from './CartItem'
 
 const DropDown = styled.div`
     position: absolute;
@@ -37,16 +38,19 @@ const DropDown = styled.div`
 
 const CartDropDown = () => {
     
-  const { open } = useContext(CartStateContext)
+  const { open, cartItem } = useContext(CartStateContext)
 
   return (
     <>
-    { open ? 
+    { open && 
     <DropDown>
-        <div className='cart-items' />
+        <div className='cart-items'>
+          {cartItem.map(item => (
+            <CartItem key={item.id} item={item} />
+          ))}        
+          </div>
         <Btn buttonType="default">Checkout</Btn>
-    </DropDown>
-    : <></> }
+    </DropDown> }
     </>
   )
 }

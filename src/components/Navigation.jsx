@@ -6,8 +6,8 @@ import styled from 'styled-components';
 import { signOutUser } from '../assets/firebase/firebase';
 
 import {ReactComponent as Logo} from "../assets/crown.svg"
-import CartIcon from './tools/CartIcon';
-import CartDropDown from './tools/CartDropDown';
+import CartIcon from './cart/CartIcon';
+import CartDropDown from './cart/CartDropDown';
 
 const Nav = styled.section`
     height: 70px;
