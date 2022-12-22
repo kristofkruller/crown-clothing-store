@@ -1,7 +1,6 @@
 import React from 'react'
+import styled from 'styled-components'
 import Btn from './tools/Btn'
-import { ProductContext } from '../context/ProductContext'
-
 
 const ShopWrap = styled.section`
   width: 100%;
@@ -54,17 +53,20 @@ const ShopWrap = styled.section`
     }
   }
 `
-const ProductCard = () => {
-  
-  const { products } = useContext(ProductContext);
+const ProductCard = ({ product }) => {
+  const { name, price, imageUrl } = product;
 
   return (
    
     <ShopWrap>
-      <img />
-      <div></div>
-      <Btn buttonType="inverted"></Btn>
-    </ShopWrap>  )
+      <img src={imageUrl} alt={name}/>
+      <div className='footer'>
+        <span className='name'>{name}</span>
+        <span className='price'>{price}</span>
+      </div>
+      <Btn buttonType="inverted">Add to cart</Btn>
+    </ShopWrap>  
+  )
 }
 
 export default ProductCard
