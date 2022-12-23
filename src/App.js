@@ -6,6 +6,7 @@ const Navigation = lazy(() => import("./components/Navigation"));
 const Categories = lazy(() => import("./components/Categories"));
 const Shop = lazy(() => import("./components/Shop"));
 const Auth = lazy(() => import("./components/auth/Auth"));
+const CheckOut = lazy(() => import("./components/cart/CheckOut"));
 
 const App = () => {
 
@@ -16,6 +17,7 @@ const App = () => {
           <Route index={true} element={<Categories />}/>
           <Route path="shop" element={<Shop />}/>
           <Route path="auth" element={<Auth />}/>
+          <Route path="checkout" element={<CheckOut />}/>
         </Route>
       </Routes>
     </Suspense>

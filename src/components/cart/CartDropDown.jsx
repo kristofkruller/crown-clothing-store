@@ -1,9 +1,10 @@
 import React, {useContext} from 'react'
 import { CartStateContext } from '../../context/CartState'
-import styled from 'styled-components'
 
+import styled from 'styled-components'
 import Btn from '../tools/Btn'
 import CartItem from './CartItem'
+import { useNavigate } from 'react-router-dom'
 
 const DropDown = styled.div`
     position: absolute;
@@ -33,12 +34,22 @@ const DropDown = styled.div`
   
     button {
       margin-top: auto;
+      &:hover * {
+        color: black;
+      }
+      & * {
+        color: white;
+      }
     }
 `
 
 const CartDropDown = () => {
     
-  const { open, cartItems } = useContext(CartStateContext)
+  const { open, cartItems } = useContext(CartStateContext);
+
+  let nav = useNavigate();
+
+  const bringToCheckout = () => nav("/checkout");
 
   return (
     <>
@@ -50,7 +61,7 @@ const CartDropDown = () => {
             ))
           }        
           </div>
-        <Btn buttonType="default">Checkout</Btn>
+        <Btn buttonType="default" onClick={bringToCheckout}>Checkout</Btn>
     </DropDown> }
     </>
   )

@@ -7,17 +7,18 @@ export const CartStateContext = createContext({
     cartItems: [],
     infuseItem: () => {},
     qty: 0,
-    setQty: () => {}
+    setQty: () => {},
+    defuseItem: () => {}
 });
 
-//helper function for infuseItem
+//helper functions for infuseItem
 
 const addToCart = (cartItems, itemToAdd) => {
     //find if dropdown contains already or not
     const existingItem = cartItems.find(element => element.id === itemToAdd.id);
     //if there is a cartitem what matches with the item what we want to add then check and increase qty:
     if (existingItem) {
-        return cartItems.map((cartItem) => 
+        return cartItems.map(cartItem => 
         cartItem.id === itemToAdd.id 
         ? {...cartItem, quantity: cartItem.quantity + 1} 
         : cartItem
@@ -25,6 +26,20 @@ const addToCart = (cartItems, itemToAdd) => {
     } 
     //if there is not an item in the cart set qty:1
     return [...cartItems, {...itemToAdd, quantity: 1}]
+}
+
+const decreaseCartQty = (cartItems, itemToRem) => {
+
+  const existingItem = cartItems.find(element => element.id === itemToRem.id);
+
+  if (existingItem.quantity === 1) return cartItems.filter((e) => e.id !== itemToRem.id)
+
+  return cartItems.map(cartItem => 
+    cartItem.id === itemToRem.id 
+    ? {...cartItem, quantity: cartItem.quantity - 1} 
+    : cartItem
+  );
+  
 }
 
 //the actual component
@@ -37,16 +52,21 @@ export const CartStateProvider = ({ children }) => {
     const infuseItem = (itemToAdd) => {
       setCartItems(addToCart(cartItems, itemToAdd));
     }
+    const defuseItem = (itemToRem) => {
+      setCartItems(decreaseCartQty(cartItems, itemToRem));
+    }
     // qty
     const [qty, setQty] = useState(0)
 
     useEffect(() => {
-        const cartQty = cartItems.reduce((total, item) => total+item.quantity, 0)          
+        const cartQty = cartItems.reduce((total, item) => total+item.quantity, 0)
+        //this is only for the icon update
         setQty(cartQty);
+
     }, [cartItems])
     
     //object what passes the accessible values
-    const value = { open, setOpen, cartItems, infuseItem, qty }
+    const value = { open, setOpen, cartItems, infuseItem, qty, defuseItem }
 
     return <CartStateContext.Provider value={value}>{children}</CartStateContext.Provider>
 

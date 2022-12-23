@@ -1,5 +1,4 @@
-import { createContext, useState, useEffect } from "react";
-import { authStateObserver, authDocument } from "../assets/firebase/firebase";
+import { createContext, useState } from "react";
 import ShopData from "../assets/shop-data.json"
 
 //default value u want to access
