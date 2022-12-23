@@ -58,7 +58,9 @@ const ProductCard = ({ product }) => {
   const { name, price, imageUrl } = product;
   const { infuseItem } = useContext(CartStateContext)
 
-  const addToCart = () => infuseItem(product)
+  const addToCart = () => {
+    infuseItem(product);
+  }
 
   return (
    

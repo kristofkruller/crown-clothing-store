@@ -27,13 +27,13 @@ const IconWrapp = styled.div`
 
 const CartIcon = () => {
 
-  const { open, setOpen } = useContext(CartStateContext)
+  const { open, setOpen, qty } = useContext(CartStateContext)
   const opener = () => setOpen(!open)
 
   return (
     <IconWrapp onClick={opener}>
         <ShopIcon className="shopping-icon" />
-        <span className="item-count">0</span>
+        <span className="item-count">{qty}</span>
     </IconWrapp>
   )
 }

@@ -38,16 +38,17 @@ const DropDown = styled.div`
 
 const CartDropDown = () => {
     
-  const { open, cartItem } = useContext(CartStateContext)
+  const { open, cartItems } = useContext(CartStateContext)
 
   return (
     <>
     { open && 
     <DropDown>
         <div className='cart-items'>
-          {cartItem.map(item => (
+          { cartItems.map(item => (
             <CartItem key={item.id} item={item} />
-          ))}        
+            ))
+          }        
           </div>
         <Btn buttonType="default">Checkout</Btn>
     </DropDown> }
