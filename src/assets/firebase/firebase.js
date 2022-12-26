@@ -1,6 +1,15 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore"
+
+import { 
+  getFirestore, 
+  doc, 
+  getDoc, 
+  setDoc,
+  collection,
+  writeBatch
+} from "firebase/firestore"
+
 import { 
   getAuth, 
   signInWithPopup, 
@@ -38,7 +47,21 @@ export const signInWithGooglePopup = () => signInWithPopup(auth, googleProvider)
 
 // firestore
 export const db = getFirestore();
+
+export const addCollectionsAndDocs = async (collectionKey, documents) => {
+  const collectionRef = collection(db, collectionKey);
+  const batch = writeBatch(db);
+
+  documents.forEach(obj => {
+    const docRef = doc(collectionRef, obj.title.toLowerCase());
+    batch.set(docRef, obj);
+  });
+
+  await batch.commit();
+}
+
 // takes the user as userAuth, and takes the displayName at signup as additionalVal to replace null
+
 export const authDocument = async (userAuth, additionalVal = {}) => {
     if (!userAuth) return;
 

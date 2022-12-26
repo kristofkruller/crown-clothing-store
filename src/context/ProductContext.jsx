@@ -1,5 +1,5 @@
 import { createContext, useState } from "react";
-import ShopData from "../assets/shop-data.json"
+import SHOP_DATA from "../assets/shop-data.js"
 
 //default value u want to access
 export const ProductContext = createContext({
@@ -9,7 +9,7 @@ export const ProductContext = createContext({
 //the actual component
 export const ProductProvider = ({children}) => {
 
-    const [products, setProducts] = useState(ShopData); 
+    const [products, setProducts] = useState(SHOP_DATA); 
 
     //object what passes the accessible values
     const value = { products, setProducts }
