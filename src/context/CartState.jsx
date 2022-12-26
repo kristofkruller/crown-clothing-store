@@ -1,6 +1,7 @@
 import { createContext, useState, useEffect } from "react";
 
 //default value u want to access
+
 export const CartStateContext = createContext({
     open: false,
     setOpen: () => {},
@@ -8,10 +9,13 @@ export const CartStateContext = createContext({
     infuseItem: () => {},
     qty: 0,
     setQty: () => {},
-    defuseItem: () => {}
+    defuseItem: () => {},
+    clearOut: () => {},
+    totalVal: 0,
+    setTotalVal: () => {}
 });
 
-//helper functions for infuseItem
+//"helper" functions
 
 const addToCart = (cartItems, itemToAdd) => {
     //find if dropdown contains already or not
@@ -42,31 +46,64 @@ const decreaseCartQty = (cartItems, itemToRem) => {
   
 }
 
+const removeCartQty = (cartItems, toClear) => {
+  
+  return (
+    cartItems.filter((e) => e.id !== toClear.id).map(cartItem => 
+      cartItem.id === toClear.id 
+      ? {
+        ...cartItem, 
+        quantity: (cartItem.quantity - cartItem.quantity)
+      } 
+      : cartItem
+    )    
+  )
+}
+
 //the actual component
+
 export const CartStateProvider = ({ children }) => {
     //drop down
     const [open, setOpen] = useState(false);
     //cart content
     const [cartItems, setCartItems] = useState([]);
+    // qty
+    const [qty, setQty] = useState(0)
+    //total
+    const [totalVal, setTotalVal] = useState(0);
+
     // this func will be clicked on the productcart add btn
+
     const infuseItem = (itemToAdd) => {
       setCartItems(addToCart(cartItems, itemToAdd));
     }
     const defuseItem = (itemToRem) => {
       setCartItems(decreaseCartQty(cartItems, itemToRem));
     }
-    // qty
-    const [qty, setQty] = useState(0)
+    const clearOut = (toClear) => {
+      setCartItems(removeCartQty(cartItems, toClear));
+    }
+    
+    //useEffect for the icon update
 
     useEffect(() => {
-        const cartQty = cartItems.reduce((total, item) => total+item.quantity, 0)
-        //this is only for the icon update
+
+        const cartQty = cartItems.reduce((total, item) => total + item.quantity, 0)
         setQty(cartQty);
 
     }, [cartItems])
-    
+
+    //useEffect for total count
+
+    useEffect(() => {
+
+      const total = cartItems.reduce((total, item) => total + (item.quantity * item.price), 0)
+      setTotalVal(total);
+      
+    }, [cartItems])
+  
     //object what passes the accessible values
-    const value = { open, setOpen, cartItems, infuseItem, qty, defuseItem }
+    const value = { open, setOpen, cartItems, infuseItem, qty, defuseItem, clearOut, totalVal }
 
     return <CartStateContext.Provider value={value}>{children}</CartStateContext.Provider>
 

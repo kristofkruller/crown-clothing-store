@@ -3,6 +3,36 @@ import { CartStateContext } from '../../context/CartState';
 
 import styled from 'styled-components';
 
+const Wrapper = styled.section`
+  width: 55%;
+  min-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 50px auto 0;
+  .total {
+    margin-top: 30px;
+    margin-left: auto;
+    font-size: 36px;
+  }
+`
+
+const CheckOutHeader = styled.section`
+  width: 100%;
+  padding: 10px 0;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid darkgrey;
+
+  .header-block {
+    text-transform: capitalize;
+    width: 23%;
+
+    &:last-child {
+      width: 8%;
+    }
+  }
+`
 const CheckOutWrap = styled.section`
   width: 100%;
   display: flex;
@@ -47,15 +77,36 @@ const CheckOutWrap = styled.section`
 
 const CheckOut = () => {
 
-  const { cartItems, infuseItem, defuseItem } = useContext(CartStateContext)
+  const { cartItems, infuseItem, defuseItem, clearOut, totalVal } = useContext(CartStateContext)
 
   return (
-    <>
+
+    <Wrapper>
+
+      <CheckOutHeader className='checkout-header'>
+        <div className='header-block'>
+          <span>Product</span>
+        </div>
+        <div className='header-block'>
+          <span>Description</span>
+        </div>
+        <div className='header-block'>
+          <span>Quantity</span>
+        </div>
+        <div className='header-block'>
+          <span>Price</span>
+        </div>
+        <div className='header-block'>
+          <span>Remove</span>
+        </div>
+      </CheckOutHeader>
+
       {cartItems.map(cartItem => {
 
         const { id, name, imageUrl, price, quantity } = cartItem;
         
         return (
+
           <CheckOutWrap key={id} className='checkout-item-container'>
             <div className='image-container'>
               <img src={imageUrl} alt={`${name}`} />
@@ -71,12 +122,17 @@ const CheckOut = () => {
               </div>
             </span>
             <span className='price'> {price}</span>
-            <div className='remove-button' >X
-            </div>
+            <div className='remove-button' onClick={() => clearOut(cartItem)}>
+              &#10005;
+            </div>            
           </CheckOutWrap>
+
         )
       })}
-    </>
+
+      <div className='total'>{`Total amount ${totalVal}`}</div>
+
+    </Wrapper>
   )
 }
 
