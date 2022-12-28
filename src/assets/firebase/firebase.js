@@ -7,7 +7,9 @@ import {
   getDoc, 
   setDoc,
   collection,
-  writeBatch
+  writeBatch,
+  query,
+  getDocs
 } from "firebase/firestore"
 
 import { 
@@ -45,14 +47,15 @@ export const auth = getAuth();
 // the custom sign in escalation
 export const signInWithGooglePopup = () => signInWithPopup(auth, googleProvider);
 
-// firestore
+// FIRESTORE
+
 export const db = getFirestore();
 
-export const addCollectionsAndDocs = async (collectionKey, documents) => {
+export const addCollectionsAndDocs = async (collectionKey, objToAdd) => {
   const collectionRef = collection(db, collectionKey);
   const batch = writeBatch(db);
 
-  documents.forEach(obj => {
+  objToAdd.forEach(obj => {
     const docRef = doc(collectionRef, obj.title.toLowerCase());
     batch.set(docRef, obj);
   });
@@ -60,6 +63,21 @@ export const addCollectionsAndDocs = async (collectionKey, documents) => {
   await batch.commit();
 }
 
+export const getCatAndDocs = async () => {
+  const collectionRef = collection(db, "categories");
+  const q = query(collectionRef);
+
+  const qSnapShot = await getDocs(q);
+
+  const catMap = qSnapShot.docs.reduce((acc, docSnapShot) => {
+    const { title, items } = docSnapShot.data();
+
+    acc[title.toLowerCase()] = items;
+    return acc;
+  }, {});
+
+  return catMap;
+}
 // takes the user as userAuth, and takes the displayName at signup as additionalVal to replace null
 
 export const authDocument = async (userAuth, additionalVal = {}) => {
