@@ -26,7 +26,7 @@ const CatPreview = ({ title, products }) => {
   return (
     <CatPrevWrap>
       <h2>
-        <span className='title'>{title}</span>
+        <span className='title'>{title.toUpperCase()}</span>
       </h2>
       <div className='preview'>
 
