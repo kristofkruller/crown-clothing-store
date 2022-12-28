@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
 import ProductCard from '../tools/ProductCard'
@@ -26,7 +27,7 @@ const CatPreview = ({ title, products }) => {
   return (
     <CatPrevWrap>
       <h2>
-        <span className='title'>{title.toUpperCase()}</span>
+        <Link className='title' to={title}>{title.toUpperCase()}</Link>
       </h2>
       <div className='preview'>
 

@@ -55,13 +55,18 @@ const CartDropDown = () => {
     <>
     { open && 
     <DropDown>
-        <div className='cart-items'>
-          { cartItems.map(item => (
-            <CartItem key={item.id} item={item} />
-            ))
-          }        
+      {cartItems.length ? ( 
+        <>
+          <div className='cart-items'>
+            { cartItems.map(item => (
+              <CartItem key={item.id} item={item} />
+              ))
+            }        
           </div>
-        <Btn buttonType="default" onClick={bringToCheckout}>Checkout</Btn>
+          <Btn buttonType="default" onClick={bringToCheckout}>Checkout</Btn>
+        </>
+        ) : <span className='empty-message'>Your cart is empty</span>
+      }
     </DropDown> }
     </>
   )

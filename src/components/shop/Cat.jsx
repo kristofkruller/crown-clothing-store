@@ -6,10 +6,18 @@ import { CategoriesContext } from '../../context/CategoriesContext'
 import ProductCard from '../tools/ProductCard'
 
 const CatWrap = styled.section`
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  column-gap: 10px;
-  row-gap: 15px;
+  .title {
+    cursor: default;
+    font-size: 28px;
+    margin-bottom: 25px;
+  }
+
+  & > div {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    column-gap: 10px;
+    row-gap: 15px;
+  }
 `
 
 const Cat = () => {
@@ -28,9 +36,12 @@ const Cat = () => {
   
   return (
     <CatWrap>
-      { products && 
-        products.map( product => <ProductCard key={product.id} product={product} />) 
-      }
+      <h2 className='title'>{category.toUpperCase()}</h2>
+      <div>
+        { products && 
+          products.map( product => <ProductCard key={product.id} product={product} />) 
+        }
+      </div>
     </CatWrap>
   )
 }

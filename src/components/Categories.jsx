@@ -1,6 +1,7 @@
 import React from 'react'
 import Data from '../assets/categories.json'
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 
 const CategoriesWrapper = styled.section`
 
@@ -10,7 +11,7 @@ const CategoriesWrapper = styled.section`
   justify-content: space-between;
 
 `
-const CategoryContainer = styled.div`
+const CategoryContainer = styled(Link)`
 
 --t-basic: all .275s ease-in-out;
 
@@ -91,8 +92,8 @@ const Categories = () => {
   return (
 
     <CategoriesWrapper className='categories-container'>
-      {Data.map(({id, title, imageUrl}) => (
-        <CategoryContainer key={id} className='category-container'>
+      {Data.map(({id, title, imageUrl, route}) => (
+        <CategoryContainer key={id} className='category-container' to={route}>
           <div className='background-image' style={{
             backgroundImage:`url(${imageUrl})`
           }} />
