@@ -1,19 +1,37 @@
-import { createContext, useState, useEffect, useReducer } from "react";
+import { createContext, useReducer } from "react";
 
-//default value u want to access
+// REDUCER //
 
-export const CartStateContext = createContext({
-    open: false,
-    setOpen: () => {},
-    cartItems: [],
-    infuseItem: () => {},
-    qty: 0,
-    setQty: () => {},
-    defuseItem: () => {},
-    clearOut: () => {},
-    totalVal: 0,
-    setTotalVal: () => {}
-});
+export const initCartStates = {
+  open: false,
+  cartItems: [],
+  qty: 0,
+  totalVal: 0
+}
+export const CART_ACTION_TYPES = {
+  SET_OPEN: "SET_OPEN",
+  SET_CART_ITEMS: "SET_CART_ITEMS"
+}
+
+const cartReducer = ( state, action ) => {
+  
+  const { type, payload } = action;
+
+  switch ( type ) {
+    case CART_ACTION_TYPES.SET_OPEN:
+      return {
+        ...state,
+        open: payload
+      };
+    case CART_ACTION_TYPES.SET_CART_ITEMS:
+      return {
+        ...state,
+        ...payload
+      }
+    default:
+      throw new Error(`Unhandled action type: ${type}, at openCartReducer`) 
+  }
+} 
 
 //"helper" functions
 
@@ -59,49 +77,63 @@ const removeCartQty = (cartItems, toClear) => {
     )    
   )
 }
+// reducer action helper
+export const actionHandler = (type, payload) => ({ type, payload });
+
+// CONTEXT //
+
+//default value u want to access
+
+export const CartStateContext = createContext({
+  open: false,
+  setOpen: () => {},
+  cartItems: [],
+  infuseItem: () => {},
+  qty: 0,
+  setQty: () => {},
+  defuseItem: () => {},
+  clearOut: () => {},
+  totalVal: 0,
+  setTotalVal: () => {}
+});
 
 //the actual component
 
 export const CartStateProvider = ({ children }) => {
-    //drop down
-    const [open, setOpen] = useState(false);
-    //cart content
-    const [cartItems, setCartItems] = useState([]);
-    // qty
-    const [qty, setQty] = useState(0)
-    //total
-    const [totalVal, setTotalVal] = useState(0);
+    //destruct states as values
+    const [{ open, cartItems, qty, totalVal }, dispatch] = useReducer(cartReducer, initCartStates);
+
+    const setOpen = set => dispatch(actionHandler(CART_ACTION_TYPES.SET_OPEN, set)); 
+
+    const updateCartItemsReducer = ( newCartItems ) => {
+
+      const newTotal = newCartItems.reduce((total, item) => total + (item.quantity * item.price), 0)
+    
+      const newCartQty = newCartItems.reduce((total, item) => total + item.quantity, 0)
+    
+      dispatch(actionHandler(CART_ACTION_TYPES.SET_CART_ITEMS, {
+          cartItems: newCartItems,
+          totalVal: newTotal,
+          qty: newCartQty
+        })
+      )
+    }
 
     // this func will be clicked on the productcart add btn
 
     const infuseItem = (itemToAdd) => {
-      setCartItems(addToCart(cartItems, itemToAdd));
+      const newCartItems = addToCart(cartItems, itemToAdd);
+      updateCartItemsReducer(newCartItems)
     }
     const defuseItem = (itemToRem) => {
-      setCartItems(decreaseCartQty(cartItems, itemToRem));
+      const newCartItems = decreaseCartQty(cartItems, itemToRem);
+      updateCartItemsReducer(newCartItems)
     }
     const clearOut = (toClear) => {
-      setCartItems(removeCartQty(cartItems, toClear));
+      const newCartItems = removeCartQty(cartItems, toClear);
+      updateCartItemsReducer(newCartItems)
     }
-    
-    //useEffect for the icon update
-
-    useEffect(() => {
-
-        const cartQty = cartItems.reduce((total, item) => total + item.quantity, 0)
-        setQty(cartQty);
-
-    }, [cartItems])
-
-    //useEffect for total count
-
-    useEffect(() => {
-
-      const total = cartItems.reduce((total, item) => total + (item.quantity * item.price), 0)
-      setTotalVal(total);
       
-    }, [cartItems])
-  
     //object what passes the accessible values
     const value = { open, setOpen, cartItems, infuseItem, qty, defuseItem, clearOut, totalVal }
 

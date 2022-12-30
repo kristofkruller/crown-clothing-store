@@ -1,5 +1,6 @@
 import { createContext, useEffect, useReducer } from "react";
 import { authStateObserver, authDocument } from "../assets/firebase/firebase";
+import { actionHandler } from "./CartState";
 
 //default value u want to access
 export const UserContext = createContext({
@@ -35,11 +36,9 @@ const userReducer = (state, action) => {
 
 export const UserProvider = ({children}) => {
 
-    const [state, dispatch] = useReducer(userReducer, initialUser)
+    const [{ user }, dispatch] = useReducer(userReducer, initialUser)
 
-    const { user } = state;
-
-    const setUser = set => dispatch({ type: USER_ACTION_TYPES.SET_USER, payload: set }); 
+    const setUser = set => dispatch(actionHandler(USER_ACTION_TYPES.SET_USER, set)); 
 
     // const [user, setUser] = useState(null);
 
