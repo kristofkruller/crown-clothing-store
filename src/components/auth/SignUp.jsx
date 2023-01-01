@@ -59,6 +59,7 @@ const SignUp = () => {
       <form onSubmit={submitChange}>
         <InputForm
           label="User Name"
+          autoComplete="username"
           required
           type="text"
           onChange={handleChange}
@@ -68,6 +69,7 @@ const SignUp = () => {
 
         <InputForm
           label="Email"
+          autoComplete="email"
           required
           type="email"
           onChange={handleChange}
@@ -77,6 +79,7 @@ const SignUp = () => {
 
         <InputForm
           label="Password"
+          autoComplete="password"
           required
           type="password"
           onChange={handleChange}
@@ -86,6 +89,7 @@ const SignUp = () => {
 
         <InputForm
           label="Confirm Password"
+          autoComplete="confirm-password"
           required
           type="password"
           onChange={handleChange}

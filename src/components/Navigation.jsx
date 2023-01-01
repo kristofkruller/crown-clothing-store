@@ -1,5 +1,4 @@
-import React, {useContext} from 'react'
-import {UserContext} from "../context/UserContext";
+import React from 'react'
 
 import { Outlet, Link } from 'react-router-dom'
 import styled from 'styled-components';
@@ -8,6 +7,8 @@ import { signOutUser } from '../assets/firebase/firebase';
 import {ReactComponent as Logo} from "../assets/crown.svg"
 import CartIcon from './cart/CartIcon';
 import CartDropDown from './cart/CartDropDown';
+
+import { useSelector } from 'react-redux';
 
 const Nav = styled.section`
     height: 70px;
@@ -38,8 +39,8 @@ const Nav = styled.section`
 
 const Navigation = () => {
 
-  const { user } = useContext(UserContext);
-
+  const user = useSelector(state => state.user.user)
+  
   const signOutUserHandler = async () => {
     await signOutUser();
   }

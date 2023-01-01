@@ -5,21 +5,23 @@ import './index.scss';
 
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { UserProvider } from './context/UserContext';
 import { CategoriesProvider } from './context/CategoriesContext';
 import { CartStateProvider } from './context/CartState';
 
+import { Provider }  from 'react-redux';
+import { store } from './assets/redux/store';
+
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <UserProvider>
-        <CategoriesProvider>
-          <CartStateProvider>
-            <App />
-          </CartStateProvider>
-        </CategoriesProvider>
-      </UserProvider>
-    </BrowserRouter>
+    <Provider store={store}>
+      <BrowserRouter>
+          <CategoriesProvider>
+            <CartStateProvider>
+              <App />
+            </CartStateProvider>
+          </CategoriesProvider>
+      </BrowserRouter>
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );
