@@ -1,5 +1,5 @@
 import { createContext, useReducer } from "react";
-
+import { actionHandler } from "../assets/redux/action-handler"
 // REDUCER //
 
 export const initCartStates = {
@@ -77,8 +77,6 @@ const removeCartQty = (cartItems, toClear) => {
     )    
   )
 }
-// reducer action helper
-export const actionHandler = (type, payload) => ({ type, payload });
 
 // CONTEXT //
 
