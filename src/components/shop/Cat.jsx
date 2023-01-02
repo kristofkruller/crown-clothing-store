@@ -1,8 +1,8 @@
-import React, {useEffect, useState, useContext} from 'react'
+import React, {useEffect, useState} from 'react'
+import { useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
 
-import { CategoriesContext } from '../../context/CategoriesContext'
 import ProductCard from '../tools/ProductCard'
 
 const CatWrap = styled.section`
@@ -24,7 +24,7 @@ const Cat = () => {
 
   const { category } = useParams()
 
-  const { categoriesMap } = useContext(CategoriesContext)
+  const categoriesMap = useSelector(state => state.categories.categoriesMap)
 
   const [products, setProducts] = useState(categoriesMap[category])
 

@@ -1,7 +1,7 @@
-import React, { useContext } from 'react'
+import React from 'react'
+import { useSelector } from 'react-redux'
 import styled from 'styled-components'
 
-import { CategoriesContext } from '../../context/CategoriesContext'
 import CatPreview from './CatPreview'
 
 const GridShop = styled.section`
@@ -12,7 +12,7 @@ const GridShop = styled.section`
 
 const CatWrap = () => {
 
-  const { categoriesMap } = useContext(CategoriesContext)
+  const categoriesMap = useSelector(state => state.categories.categoriesMap)
 
   return (
 
