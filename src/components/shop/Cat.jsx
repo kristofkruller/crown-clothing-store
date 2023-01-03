@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react'
 import { useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
+import { catSelectorMap } from '../../assets/redux/categories/category-selector'
 
 import ProductCard from '../tools/ProductCard'
 
@@ -24,7 +25,7 @@ const Cat = () => {
 
   const { category } = useParams()
 
-  const categoriesMap = useSelector(state => state.categories.categoriesMap)
+  const categoriesMap = useSelector(catSelectorMap)
 
   const [products, setProducts] = useState(categoriesMap[category])
 

@@ -1,6 +1,7 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import styled from 'styled-components'
+import { catSelectorMap } from '../../assets/redux/categories/category-selector'
 
 import CatPreview from './CatPreview'
 
@@ -12,7 +13,7 @@ const GridShop = styled.section`
 
 const CatWrap = () => {
 
-  const categoriesMap = useSelector(state => state.categories.categoriesMap)
+  const categoriesMap = useSelector(catSelectorMap)
 
   return (
 

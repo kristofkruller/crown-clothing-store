@@ -1,7 +1,7 @@
 import { CAT_ACTION_TYPES } from "./category-type";
 
 export const initialCatState = {
-  categoriesMap: {},
+  categoriesMap: [],
 }
 
 export const catReducer = (state = initialCatState, action = {}) => {

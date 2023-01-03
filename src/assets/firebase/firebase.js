@@ -69,14 +69,10 @@ export const getCatAndDocs = async () => {
 
   const qSnapShot = await getDocs(q);
 
-  const catMap = qSnapShot.docs.reduce((acc, docSnapShot) => {
-    const { title, items } = docSnapShot.data();
+  return qSnapShot.docs.map(doc =>
+    doc.data()
+  );
 
-    acc[title.toLowerCase()] = items;
-    return acc;
-  }, {});
-
-  return catMap;
 }
 // takes the user as userAuth, and takes the displayName at signup as additionalVal to replace null
 
