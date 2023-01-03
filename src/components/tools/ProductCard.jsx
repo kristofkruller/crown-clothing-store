@@ -1,7 +1,10 @@
-import React, {useContext} from 'react'
-import { CartStateContext } from '../../context/CartState'
+import React from 'react'
 import styled from 'styled-components'
 import Btn from './Btn'
+import { useSelector } from 'react-redux'
+import { cartItemsSelector } from '../../assets/redux/cart/cart-selector'
+import { addToCart } from '../../assets/redux/cart/cart-action'
+import useUpdateCartItems from '../../assets/redux/categories/update-cart-action'
 
 const ShopWrap = styled.section`
   width: 100%;
@@ -55,11 +58,19 @@ const ShopWrap = styled.section`
   }
 `
 const ProductCard = ({ product }) => {
-  const { name, price, imageUrl } = product;
-  const { infuseItem } = useContext(CartStateContext)
 
-  const addToCart = () => {
-    infuseItem(product);
+  const { name, price, imageUrl } = product;
+  
+  const cartItems = useSelector(cartItemsSelector);
+
+  const updateCartItems = useUpdateCartItems();
+
+  const addTo = () => {
+
+    const newCartItems = addToCart(cartItems, product);
+
+    updateCartItems(newCartItems)
+
   }
 
   return (
@@ -70,7 +81,7 @@ const ProductCard = ({ product }) => {
         <span className='name'>{name}</span>
         <span className='price'>{price}</span>
       </div>
-      <Btn buttonType="inverted" onClick={addToCart}>Add to cart</Btn>
+      <Btn buttonType="inverted" onClick={addTo}>Add to cart</Btn>
     </ShopWrap>  
   )
 }

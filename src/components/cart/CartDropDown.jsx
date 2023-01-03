@@ -1,10 +1,11 @@
-import React, {useContext} from 'react'
-import { CartStateContext } from '../../context/CartState'
+import React from 'react'
 
 import styled from 'styled-components'
 import Btn from '../tools/Btn'
 import CartItem from './CartItem'
 import { useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import { cartItemsSelector, openSelector } from '../../assets/redux/cart/cart-selector'
 
 const DropDown = styled.div`
     position: absolute;
@@ -45,7 +46,8 @@ const DropDown = styled.div`
 
 const CartDropDown = () => {
     
-  const { open, cartItems } = useContext(CartStateContext);
+  const open = useSelector(openSelector);
+  const cartItems = useSelector(cartItemsSelector);
 
   let nav = useNavigate();
 

@@ -1,7 +1,9 @@
-import React, { useContext } from 'react'
+import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
+import { setOpen } from '../../assets/redux/cart/cart-action'
+import { openSelector, qtySelector } from '../../assets/redux/cart/cart-selector'
 import { ReactComponent as ShopIcon } from '../../assets/shopping-bag.svg'
-import { CartStateContext } from '../../context/CartState'
 
 const IconWrapp = styled.div`
   width: 45px;
@@ -26,9 +28,14 @@ const IconWrapp = styled.div`
 `
 
 const CartIcon = () => {
+  
+  const dispatch = useDispatch();
+  const open = useSelector(openSelector);
+  const qty = useSelector(qtySelector);
 
-  const { open, setOpen, qty } = useContext(CartStateContext)
-  const opener = () => setOpen(!open)
+  const opener = () => dispatch(
+    setOpen(!open)
+  )
 
   return (
     <IconWrapp onClick={opener}>

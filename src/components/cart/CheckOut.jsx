@@ -1,7 +1,11 @@
-import React, { useContext } from 'react'
-import { CartStateContext } from '../../context/CartState';
+import React from 'react'
 
 import styled from 'styled-components';
+
+import { useSelector } from 'react-redux';
+import { cartItemsSelector, totalValSelector } from '../../assets/redux/cart/cart-selector';
+import { addToCart, decreaseCartQty, removeCartQty } from '../../assets/redux/cart/cart-action';
+import useUpdateCartItems from '../../assets/redux/categories/update-cart-action';
 
 const Wrapper = styled.section`
   width: 55%;
@@ -16,7 +20,6 @@ const Wrapper = styled.section`
     font-size: 36px;
   }
 `
-
 const CheckOutHeader = styled.section`
   width: 100%;
   padding: 10px 0;
@@ -77,7 +80,23 @@ const CheckOutWrap = styled.section`
 
 const CheckOut = () => {
 
-  const { cartItems, infuseItem, defuseItem, clearOut, totalVal } = useContext(CartStateContext)
+  const cartItems = useSelector(cartItemsSelector);
+  const totalVal = useSelector(totalValSelector);
+
+  const updateCartItems = useUpdateCartItems();
+
+  const infuseItem = (itemToAdd) => {
+    const newCartItems = addToCart(cartItems, itemToAdd);
+    updateCartItems(newCartItems)
+  }
+  const defuseItem = (itemToRem) => {
+    const newCartItems = decreaseCartQty(cartItems, itemToRem);
+    updateCartItems(newCartItems)
+  }
+  const clearOut = (toClear) => {
+    const newCartItems = removeCartQty(cartItems, toClear);
+    updateCartItems(newCartItems)
+  }
 
   return (
 
