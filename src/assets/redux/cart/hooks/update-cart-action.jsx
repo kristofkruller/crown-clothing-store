@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux"
-import { actionHandler } from "../action-handler"
-import { CART_ACTION_TYPES } from "../cart/cart-type"
+import { actionHandler } from "../../action-handler"
+import { CART_ACTION_TYPES } from "../cart-type"
   
 function useUpdateCartItems () {
 
