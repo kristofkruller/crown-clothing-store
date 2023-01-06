@@ -4,7 +4,7 @@ import Btn from './Btn'
 import { useSelector } from 'react-redux'
 import { cartItemsSelector } from '../../assets/redux/cart/cart-selector'
 import { addToCart } from '../../assets/redux/cart/cart-action'
-import useUpdateCartItems from '../../assets/redux/cart/hooks/update-cart-action'
+import useUpdateCartItems from '../../assets/redux/cart/hooks/useUpdateCartItems'
 
 const ShopWrap = styled.section`
   width: 100%;

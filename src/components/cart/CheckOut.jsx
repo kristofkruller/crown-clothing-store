@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 import { cartItemsSelector, totalValSelector } from '../../assets/redux/cart/cart-selector';
 import { addToCart, decreaseCartQty, removeCartQty } from '../../assets/redux/cart/cart-action';
-import useUpdateCartItems from '../../assets/redux/cart/hooks/update-cart-action';
+import useUpdateCartItems from '../../assets/redux/cart/hooks/useUpdateCartItems';
 
 const Wrapper = styled.section`
   width: 55%;
