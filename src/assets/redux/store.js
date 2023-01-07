@@ -10,8 +10,12 @@ import storage from "redux-persist/lib/storage";
 import { rootReducer } from "./root-reducer";
 
 // root reducer
-const notInProd = process.env.NODE_ENV !== "production";
-const devLogger = [notInProd && logger].filter(Boolean);
+
+const middleWares = [
+  process.env.NODE_ENV === 'development' && logger,
+  thunk,
+].filter(Boolean);
+
 
 // import { compose, applyMiddleware } from "redux";
 // const enhancers = compose(applyMiddleware(...middleWares)); compose n applymiddleware no longer valid with configureStore
@@ -19,14 +23,14 @@ const devLogger = [notInProd && logger].filter(Boolean);
 const persistConfig = {
   key: "root",
   storage: storage,
-  blacklist: ["user"],
+  whitelist: ["cart"],
 }
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
   reducer: persistedReducer,
   preloadedState: {},
-  middleware: devLogger, thunk
+  middleware: middleWares
 });
 
 export const persistor = persistStore(store);

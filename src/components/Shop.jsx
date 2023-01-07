@@ -3,8 +3,7 @@ import { Routes, Route } from 'react-router-dom'
 import CatWrap from './shop/CatWrap'
 import Cat from './shop/Cat'
 
-import { getCatAndDocs } from '../assets/firebase/firebase'
-import { setCategoriesMap } from '../assets/redux/categories/category-action'
+import { fetchCategoryAsync } from '../assets/redux/categories/category-action'
 import { useDispatch } from 'react-redux'
 
 const Shop = () => {
@@ -12,11 +11,7 @@ const Shop = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const catMap = async () => {
-      const data = await getCatAndDocs();
-      dispatch(setCategoriesMap(data));
-    }
-    catMap();
+    dispatch(fetchCategoryAsync())
   }, [])
 
   return (

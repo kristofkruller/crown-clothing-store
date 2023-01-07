@@ -16,3 +16,8 @@ export const catSelectorMap = createSelector(
     return acc;
   }, {})
 )
+
+export const categoriesLoading = createSelector(
+  [categoriesReducer],
+  val => val.isLoading 
+)
