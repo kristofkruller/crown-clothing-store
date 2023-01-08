@@ -1,22 +1,28 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter } from 'react-router-dom';
 import './index.scss';
 
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-
+//ROUTE
+import { BrowserRouter } from 'react-router-dom';
+//REDUX
 import { Provider as ReduxProvider }  from 'react-redux';
 import { persistor, store } from './assets/redux/store';
+// CACHE
 import { PersistGate } from 'redux-persist/integration/react';
-
+// STRIPE
+import { Elements as StripeProvider } from '@stripe/react-stripe-js';
+import { stripeReg } from './assets/stripe/stripe';
 
 ReactDOM.render(
   <React.StrictMode>
     <ReduxProvider store={store}>
       <PersistGate persistor={persistor}>
         <BrowserRouter>
-          <App />
+          <StripeProvider stripe={stripeReg}>
+            <App />
+          </StripeProvider>
         </BrowserRouter>
       </PersistGate>
     </ReduxProvider>
