@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
 import { categoriesLoading, catSelectorMap } from '../../assets/redux/categories/category-selector'
 
-import ProductCard from '../tools/ProductCard'
+import ProductCard from './ProductCard'
 import Spinner from '../tools/Spinner'
 
 const CatWrap = styled.section`

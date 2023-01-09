@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import Btn from './Btn'
+import Btn from '../tools/Btn'
 import { useSelector } from 'react-redux'
 import { cartItemsSelector } from '../../assets/redux/cart/cart-selector'
 import { addToCart } from '../../assets/redux/cart/cart-action'

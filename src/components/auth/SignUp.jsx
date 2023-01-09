@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { authWithEmailPass, authDocument } from "../../assets/firebase/firebase";
-import InputForm from "../tools/InputForm";
+import InputForm from "./InputForm";
 import Btn from "../tools/Btn";
 import styled from "styled-components";
 

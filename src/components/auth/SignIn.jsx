@@ -7,7 +7,7 @@ import {
 } from "../../assets/firebase/firebase";
 
 import Btn from "../tools/Btn";
-import InputForm from "../tools/InputForm";
+import InputForm from "./InputForm";
 
 const SignInWrap = styled.section`
   display: flex;

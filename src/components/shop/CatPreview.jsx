@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
-import ProductCard from '../tools/ProductCard'
+import ProductCard from './ProductCard'
 
 const CatPrevWrap = styled.section`
   display: flex;
