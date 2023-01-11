@@ -9,6 +9,7 @@ import CartIcon from './cart/CartIcon';
 import CartDropDown from './cart/CartDropDown';
 
 import { useSelector } from 'react-redux';
+import CookieConsent from './CookieConsent';
 
 const Nav = styled.section`
     height: 70px;
@@ -66,6 +67,7 @@ const Navigation = () => {
             </div>
             <CartDropDown />
         </Nav>
+        <CookieConsent/>
         <Outlet />
     </>
   )

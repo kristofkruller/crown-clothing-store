@@ -1,13 +1,42 @@
 import React from 'react'
-import styled from 'styled-components'
-import {ReactComponent as Logo} from "../assets/crown.svg"
 import Btn from './tools/Btn'
+import {ReactComponent as Logo} from "../assets/crown.svg"
 
+import styled from 'styled-components'
+
+import { useDispatch, useSelector } from 'react-redux'
+import { declineCookies, setAllCookies, setNecessaryCookies } from '../assets/redux/cookies/cookie-action'
+import { answered } from '../assets/redux/cookies/cookie-selector'
+
+const CookieWrap = styled.section`
+
+  position: absolute;
+  bottom: 0;
+  left: 0;
+
+  display: flex;
+  width: 100vw;
+  height: 80px;
+  background-color: white;
+  *:not(button) {
+    color: black;
+    font-size: 12px;
+  }
+`
 
 const CookieConsent = () => {
+  // REDUX INIT
+  const dispatch = useDispatch();
 
+  const clickNes = () => dispatch(setNecessaryCookies())
+  const clickAll = () => dispatch(setAllCookies())
+  const decline = () => dispatch(declineCookies())
+
+  const isAnswered = useSelector(answered)
+  
   return (
-      <div>
+    <>{!isAnswered && 
+      <CookieWrap id="cookiesPopUp">
         <div id="policy-block">
           <Logo />
           <div id="policy-holder">
@@ -28,10 +57,12 @@ const CookieConsent = () => {
           </div>
         </div>
         <div id="btn-block">
-          <Btn id="set-btn">Cookies Settings</Btn>
-          <Btn id="accept-btn">Accept All Cookies</Btn>
+          <Btn id="set-btn" onClick={clickNes}>Necessary Cookies</Btn>
+          <Btn id="accept-btn" onClick={clickAll}>Accept All Cookies</Btn>
         </div>
-      </div>
+        <div id="close" onClick={decline}>X</div>
+      </CookieWrap>
+    }</>
   );
 }
 

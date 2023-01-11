@@ -6,6 +6,10 @@ import {
   signInWithGooglePopup,
 } from "../../assets/firebase/firebase";
 
+import { useSelector } from "react-redux";
+import { useCookies } from 'react-cookie';
+import { cookieType } from "../../assets/redux/cookies/cookie-selector";
+
 import Btn from "../tools/Btn";
 import InputForm from "./InputForm";
 
@@ -28,6 +32,21 @@ const SignIn = () => {
   const [fields, setFields] = useState(fieldTemplate);
   const { email, password } = fields;
 
+  const typeOfAnswer = useSelector(cookieType);
+
+  const [userCookie, setUserCookie, removeUserCookie] = useCookies([]);
+  const today = new Date();
+  const expires = new Date();
+
+  expires.setFullYear(expires.getFullYear() + 10);
+
+  const setCookiesToBrowser = () => {
+    typeOfAnswer === "all" && setUserCookie(`signIn-${today.getMilliseconds()}`, `with:${email}__logged-in-at:${today.toISOString()}`, {
+      path: "/auth",
+      expires: expires
+    });
+  } 
+
   const resetFields = () => setFields(fieldTemplate);
 
   const googleSignIn = async () => {
@@ -38,9 +57,12 @@ const SignIn = () => {
     event.preventDefault();
 
     try {
+
       await signInWithEmailPass(email, password);
+      setCookiesToBrowser();
 
       resetFields();
+
     } catch (error) {
       switch (error.code) {
         case "auth/wrong-password":

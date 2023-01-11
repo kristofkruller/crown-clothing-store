@@ -15,15 +15,19 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { Elements as StripeProvider } from '@stripe/react-stripe-js';
 import { stripeReg } from './assets/stripe/stripe';
 
+import { CookiesProvider } from 'react-cookie';
+
 ReactDOM.render(
   <React.StrictMode>
     <ReduxProvider store={store}>
       <PersistGate persistor={persistor}>
+      <CookiesProvider>
         <BrowserRouter>
           <StripeProvider stripe={stripeReg}>
             <App />
           </StripeProvider>
         </BrowserRouter>
+      </CookiesProvider>
       </PersistGate>
     </ReduxProvider>
   </React.StrictMode>,
