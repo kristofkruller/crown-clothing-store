@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 
 import { Outlet, Link } from 'react-router-dom'
 import styled from 'styled-components';
@@ -8,8 +8,10 @@ import {ReactComponent as Logo} from "../assets/crown.svg"
 import CartIcon from './cart/CartIcon';
 import CartDropDown from './cart/CartDropDown';
 
-import { useSelector } from 'react-redux';
+import { setOpen } from '../assets/redux/cart/cart-action'
+import { useDispatch, useSelector } from 'react-redux';
 import CookieConsent from './CookieConsent';
+import { openSelector } from '../assets/redux/cart/cart-selector';
 
 const Nav = styled.section`
     height: 70px;
@@ -41,13 +43,19 @@ const Nav = styled.section`
 const Navigation = () => {
 
   const user = useSelector(state => state.user.user)
-  
+  const open = useSelector(openSelector);
+  const dispatch = useDispatch();
+
+  const dropDorwnHandler = useCallback(() => {
+    open && dispatch(setOpen(!open));
+  }, [open]);
+
   const signOutUserHandler = async () => {
     await signOutUser();
   }
 
   return (
-    <>
+    <section onClick={dropDorwnHandler}>
         <Nav className='navigation'>
             <Link className='logo-container' to='/'>
             <Logo className='logo' />
@@ -69,7 +77,7 @@ const Navigation = () => {
         </Nav>
         <CookieConsent/>
         <Outlet />
-    </>
+    </section>
   )
 }
 
