@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { SpinnerContainer } from './Spinner'
 
 const Button = styled.button`
     min-width: 165px;
@@ -18,6 +19,7 @@ const Button = styled.button`
     cursor: pointer;
     display: flex;
     justify-content: center;
+    align-items: center;
     white-space: nowrap;
 
     &:hover {
@@ -48,20 +50,24 @@ const Button = styled.button`
         }
     }
 `
-
+const ButtonSpinner = styled(SpinnerContainer)`
+  width: 30px;
+  height: 30px;
+`
 const ButtonTypes = {
     "google" : "google-sign-in",
     "inverted" : "inverted",
     "default": ""
 }
 
-const Btn = ({ children, buttonType, ...other }) => {
+const Btn = ({ children, buttonType, isLoading, ...other }) => {
   return (
     <Button 
+        disabled={isLoading}
         className={`button-container ${ButtonTypes[buttonType]}`} 
         {...other}
     >
-        {children}
+        {isLoading ? <ButtonSpinner/> : children}
     </Button>
   )
 }
