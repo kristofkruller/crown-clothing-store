@@ -7,6 +7,8 @@ import { cartItemsSelector, totalValSelector } from '../../assets/redux/cart/car
 import { addToCart, decreaseCartQty, removeCartQty } from '../../assets/redux/cart/cart-action';
 import useUpdateCartItems from '../../assets/redux/cart/hooks/useUpdateCartItems';
 
+import Payment from '../payment/Payment';
+
 const Wrapper = styled.section`
   width: 55%;
   min-height: 90vh;
@@ -150,7 +152,7 @@ const CheckOut = () => {
       })}
 
       <div className='total'>{`Total amount ${totalVal}`}</div>
-
+      <Payment />
     </Wrapper>
   )
 }
