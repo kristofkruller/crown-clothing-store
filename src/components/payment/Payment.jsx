@@ -1,8 +1,11 @@
-import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js'
 import React, { useState } from 'react'
-import { useSelector } from 'react-redux';
 import styled from 'styled-components'
+
+import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js'
+
+import { useSelector } from 'react-redux';
 import { totalValSelector } from '../../assets/redux/cart/cart-selector';
+
 import Btn from '../tools/Btn'
 
 export const PaymentFormContainer = styled.div`
