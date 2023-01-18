@@ -2,7 +2,7 @@ import { createSelector } from "reselect"; //memoization
 import { InitState } from "./category-reducer"
 import { CatSelectorMapType } from "./category-type";
 
-const categoriesReducer = (state): InitState => state.categories;
+const categoriesReducer = (state): InitState => state.categoriesMap
 
 const categoriesVal = createSelector(
   [categoriesReducer],

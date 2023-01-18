@@ -31,7 +31,7 @@ const CartIcon = () => {
   
   const dispatch = useDispatch();
   const open = useSelector(openSelector);
-  const qty = useSelector(qtySelector);
+  const quantity = useSelector(qtySelector);
 
   const opener = () => dispatch(
     setOpen(!open)
@@ -40,7 +40,7 @@ const CartIcon = () => {
   return (
     <IconWrapp onClick={opener}>
         <ShopIcon className="shopping-icon" />
-        <span className="item-count">{qty}</span>
+        <span className="item-count">{quantity}</span>
     </IconWrapp>
   )
 }

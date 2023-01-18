@@ -1,6 +1,6 @@
 // open: false,
 // cartItems: [],
-// qty: 0,
+// quantity: 0,
 // totalVal: 0
 
 import { createSelector } from "reselect";
@@ -19,7 +19,7 @@ export const cartItemsSelector = createSelector(
 
 export const qtySelector = createSelector(
   [cartReducer],
-  quantity => quantity.qty
+  quantity => quantity.quantity
 );
 
 export const totalValSelector = createSelector(
