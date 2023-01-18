@@ -5,12 +5,12 @@ import { setOpen, setCart } from "./cart-action"
 
 export type CartType = {
   open: boolean,
-  cartItems: CartItems[],
+  cartItems: CartItems | null
 }
 
 export const initCartStates: CartType = {
   open: false,
-  cartItems: []
+  cartItems: null
 }
 
 export const cartReducer = ( state = initCartStates, action = {} as AnyAction): CartType => {
@@ -21,25 +21,8 @@ export const cartReducer = ( state = initCartStates, action = {} as AnyAction): 
   }
   if (setCart.match(action)) return {
     ...state,
-    ...action.payload
+    cartItems: action.payload
   }
 
-
   return state
-  // const { type, payload } = action;
-
-  // switch ( type ) {
-  //   case CART_ACTION_TYPES.SET_OPEN:
-  //     return {
-  //       ...state,
-  //       open: payload
-  //     };
-  //   case CART_ACTION_TYPES.SET_CART_ITEMS:
-  //     return {
-  //       ...state,
-  //       ...payload
-  //     };
-  //   default:
-  //     return state;
-  // }
 } 

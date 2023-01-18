@@ -3,11 +3,11 @@ import { ActionWithPayload, actionHandler, withMatcher } from "../action-handler
 import { CART_ACTION_TYPES, CartItems } from "./cart-type";
 
 export type OpenAction = ActionWithPayload<CART_ACTION_TYPES.SET_OPEN, boolean>;
-export type SetterAction = ActionWithPayload<CART_ACTION_TYPES.SET_CART_ITEMS, CartItems[]>;
+export type SetterAction = ActionWithPayload<CART_ACTION_TYPES.SET_CART_ITEMS, CartItems>;
 
 export const setOpen = withMatcher((set: boolean):OpenAction => actionHandler(CART_ACTION_TYPES.SET_OPEN, set));
 
-export const setCart = withMatcher((CartItems : CartItems[]):SetterAction => actionHandler(CART_ACTION_TYPES.SET_CART_ITEMS, CartItems));
+export const setCart = withMatcher((CartItems: CartItems):SetterAction => actionHandler(CART_ACTION_TYPES.SET_CART_ITEMS, CartItems));
 
 //"helper" functions
 
