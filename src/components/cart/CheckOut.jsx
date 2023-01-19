@@ -2,10 +2,9 @@ import React from 'react'
 
 import styled from 'styled-components';
 
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { cartItemsSelector, totalValSelector } from '../../assets/redux/cart/cart-selector';
 import { addToCart, decreaseCartQty, removeCartQty } from '../../assets/redux/cart/cart-action';
-import useUpdateCartItems from '../../assets/redux/cart/hooks/useUpdateCartItems';
 
 import Payment from '../payment/Payment';
 
@@ -82,23 +81,15 @@ const CheckOutWrap = styled.section`
 
 const CheckOut = () => {
 
+  const dispatch = useDispatch();
   const cartItems = useSelector(cartItemsSelector);
   const totalVal = useSelector(totalValSelector);
 
-  const updateCartItems = useUpdateCartItems();
-
-  const infuseItem = (itemToAdd) => {
-    const newCartItems = addToCart(cartItems, itemToAdd);
-    updateCartItems(newCartItems)
-  }
-  const defuseItem = (itemToRem) => {
-    const newCartItems = decreaseCartQty(cartItems, itemToRem);
-    updateCartItems(newCartItems)
-  }
-  const clearOut = (toClear) => {
-    const newCartItems = removeCartQty(cartItems, toClear);
-    updateCartItems(newCartItems)
-  }
+  const infuseItem = (itemToAdd) => dispatch(addToCart(cartItems, itemToAdd))
+  
+  const defuseItem = (itemToRem) => dispatch(decreaseCartQty(cartItems, itemToRem))
+  
+  const clearOut = (toClear) => dispatch(removeCartQty(cartItems, toClear))
 
   return (
 

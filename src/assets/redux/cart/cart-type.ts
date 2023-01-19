@@ -8,4 +8,4 @@ export enum CART_ACTION_TYPES {
 export type CartItems = {
   quantity: number,
   totalVal: number
-} & CatArrayItem & Category
+} & CatArrayItem

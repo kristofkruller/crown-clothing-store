@@ -2,7 +2,7 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
 import { setOpen } from '../../assets/redux/cart/cart-action'
-import { openSelector, qtySelector } from '../../assets/redux/cart/cart-selector'
+import { openSelector, cartCountSelector } from '../../assets/redux/cart/cart-selector'
 import { ReactComponent as ShopIcon } from '../../assets/shopping-bag.svg'
 
 const IconWrapp = styled.div`
@@ -31,7 +31,7 @@ const CartIcon = () => {
   
   const dispatch = useDispatch();
   const open = useSelector(openSelector);
-  const quantity = useSelector(qtySelector);
+  const quantity = useSelector(cartCountSelector);
 
   const opener = () => dispatch(
     setOpen(!open)
