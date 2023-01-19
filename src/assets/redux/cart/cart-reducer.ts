@@ -5,7 +5,7 @@ import { setOpen, setCart } from "./cart-action"
 
 export type CartType = {
   open: boolean,
-  cartItems: CartItems | null
+  cartItems: CartItems[] | null
 }
 
 export const initCartStates: CartType = {
@@ -21,7 +21,7 @@ export const cartReducer = ( state = initCartStates, action = {} as AnyAction): 
   }
   if (setCart.match(action)) return {
     ...state,
-    cartItems: action.payload
+    ...action.payload
   }
 
   return state

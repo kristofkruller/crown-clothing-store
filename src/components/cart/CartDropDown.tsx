@@ -51,13 +51,13 @@ const CartDropDown = () => {
 
   let nav = useNavigate();
 
-  const bringToCheckout = () => nav("/checkout");
+  const bringToCheckout: Function = () => nav("/checkout");
 
   return (
     <>
     { open && 
     <DropDown>
-      {cartItems.length ? ( 
+      {cartItems ? ( 
         <>
           <div className='cart-items'>
             { cartItems.map(item => (
