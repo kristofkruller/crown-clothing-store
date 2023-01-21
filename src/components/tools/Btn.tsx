@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { ReactNode, FC, ButtonHTMLAttributes } from 'react'
 import styled from 'styled-components'
 import { SpinnerContainer } from './Spinner'
+
 
 const Button = styled.button`
     min-width: 165px;
@@ -54,17 +55,28 @@ const ButtonSpinner = styled(SpinnerContainer)`
   width: 30px;
   height: 30px;
 `
-const ButtonTypes = {
-    "google" : "google-sign-in",
-    "inverted" : "inverted",
-    "default": ""
+type BtnTypes = {
+  "google" : string,
+  "inverted" : string,
+  "default" : string,
 }
 
-const Btn = ({ children, buttonType, isLoading, ...other }) => {
+const ButtonTypes: BtnTypes = {
+    "google" : "google-sign-in",
+    "inverted" : "inverted",
+    "default" : ""
+}
+type ButtonProps = {
+  children?: ReactNode,
+  buttonType: string, 
+  isLoading?: boolean,
+} & ButtonHTMLAttributes<HTMLButtonElement>
+
+const Btn: FC<ButtonProps> = ({ children, buttonType, isLoading, ...other }: ButtonProps) => {
   return (
     <Button 
         disabled={isLoading}
-        className={`button-container ${ButtonTypes[buttonType]}`} 
+        className={`button-container ${ButtonTypes[buttonType as keyof typeof ButtonTypes]}`} 
         {...other}
     >
         {isLoading ? <ButtonSpinner/> : children}

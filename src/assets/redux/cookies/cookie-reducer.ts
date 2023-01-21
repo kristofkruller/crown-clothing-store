@@ -1,28 +1,31 @@
-import { answered } from "./cookie-selector";
+import { AnyAction } from "redux";
 import { COOKIE_ACTION_TYPES } from "./cookie-type";
 
-const initialCookieState = {
+export type InitCookieTypes = {
+  cookieState: string,
+  answered: boolean
+}
+
+const initialCookieState: InitCookieTypes = {
   cookieState: "",
   answered: false
 }
 
-export const cookieReducer = (state = initialCookieState, action = {}) => {
+export const cookieReducer = (state = initialCookieState, action = {} as AnyAction):InitCookieTypes => {
 
-  const {type, payload} = action;
-
-  switch ( type ) {
+  switch ( action.type ) {
     case COOKIE_ACTION_TYPES.NECESSARY_ONLY:
       return {
         ...state,
         answered: true,
-        cookieState: payload
+        cookieState: action.payload
       };
 
     case COOKIE_ACTION_TYPES.ACCEPT_ALL:
       return {
         ...state,
         answered: true,
-        cookieState: payload
+        cookieState: action.payload
       };
     case COOKIE_ACTION_TYPES.DECLINE_ALL:
       return {

@@ -51,7 +51,7 @@ const CartDropDown = () => {
 
   let nav = useNavigate();
 
-  const bringToCheckout: Function = () => nav("/checkout");
+  const bringToCheckout: () => ReturnType<typeof nav> = () => nav("/checkout");
 
   return (
     <>

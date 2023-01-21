@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { ChangeEvent, FC, FormEvent, useState } from "react";
 
 import styled from "styled-components";
 import {
@@ -23,12 +23,20 @@ const ButtonWrap = styled.div`
   justify-content: space-around;
   margin: 20px 0;
 `;
-const fieldTemplate = {
+
+export type FieldTempType = {
+  displayName?: string,
+  email?: string,
+  password?: string,
+  confirm?: string
+}
+
+const fieldTemplate: FieldTempType = {
   email: "",
   password: "",
 };
 
-const SignIn = () => {
+const SignIn: FC = () => {
   const [fields, setFields] = useState(fieldTemplate);
   const { email, password } = fields;
 
@@ -41,7 +49,7 @@ const SignIn = () => {
   expires.setFullYear(expires.getFullYear() + 10);
 
   const setCookiesToBrowser = () => {
-    typeOfAnswer === "all" && setUserCookie(`signIn-${today.getMilliseconds()}`, `with:${email}__logged-in-at:${today.toISOString()}`, {
+    typeOfAnswer === "all" && setUserCookie(`signIn-${today.getMilliseconds()}` as never, `with:${email}__logged-in-at:${today.toISOString()}`, {
       path: "/auth",
       expires: expires
     });
@@ -53,7 +61,7 @@ const SignIn = () => {
     await signInWithGooglePopup();
   };
 
-  const submitChange = async (event) => {
+  const submitChange = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     try {
@@ -63,7 +71,8 @@ const SignIn = () => {
 
       resetFields();
 
-    } catch (error) {
+    } catch (error: any //any because FireBaseError is not exported
+    ) {
       switch (error.code) {
         case "auth/wrong-password":
           alert("incorrect password for email");
@@ -77,7 +86,7 @@ const SignIn = () => {
     }
   };
 
-  const handleChange = (event) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
 
     setFields({ ...fields, [name]: value });
