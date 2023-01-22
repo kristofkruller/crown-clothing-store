@@ -1,7 +1,8 @@
 import { createSelector } from "reselect";
+import { RootState } from "../store";
 import { InitCookieTypes } from "./cookie-reducer";
 
-const cookieReducer = (state): InitCookieTypes => state.cookies;
+const cookieReducer = (state: RootState): InitCookieTypes => state.cookies;
 
 export const cookieType = createSelector(
   [cookieReducer],

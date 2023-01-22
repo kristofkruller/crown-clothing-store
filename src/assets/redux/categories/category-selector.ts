@@ -1,8 +1,9 @@
 import { createSelector } from "reselect"; //memoization
+import { RootState } from "../store";
 import { InitState } from "./category-reducer"
 import { CatSelectorMapType } from "./category-type";
 
-const categoriesReducer = (state): InitState => state.categoriesMap
+const categoriesReducer = (state: RootState): InitState => state.categories
 
 const categoriesVal = createSelector(
   [categoriesReducer],
@@ -11,9 +12,8 @@ const categoriesVal = createSelector(
 
 export const catSelectorMap = createSelector( 
   [categoriesVal],
-  (val): CatSelectorMapType => val.reduce((acc, category) => {
+  (values): CatSelectorMapType => values.reduce((acc, category) => {
     const { title, items } = category;
-
     acc[title.toLowerCase()] = items;
     return acc;
   }, {} as CatSelectorMapType)

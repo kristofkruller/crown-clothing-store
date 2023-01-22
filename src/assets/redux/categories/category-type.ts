@@ -4,7 +4,6 @@ export enum CAT_ACTION_TYPES {
   FETCH_CATEGORY_REJECT= "FETCH_CATEGORY_REJECT"
 }
 
-
 export type Category = {
   title: string;
   imageUrl: string;

@@ -4,7 +4,7 @@ import { Category } from "./category-type";
 import { rejectFetchCategories, resolveFetchCategories, startFetchCategories } from "./category-action"
 
 export type InitState = {
-  readonly categoriesMap?: Category[];
+  readonly categoriesMap: Category[];
   readonly isLoading: boolean;
   readonly error: Error | null;
 }
@@ -33,25 +33,3 @@ export const catReducer = (state = initialCatState, action = {} as AnyAction): I
 
   return state;
 }
-
-  // switch ( action.type ) {
-  //   case CAT_ACTION_TYPES.FETCH_CATEGORY_START:
-  //     return {
-  //       ...state,
-  //       isLoading: true,
-  //     };
-  //   case CAT_ACTION_TYPES.FETCH_CATEGORY_RESOLVE:
-  //     return {
-  //       ...state,
-  //       isLoading: false,
-  //       categoriesMap: action.payload,
-  //     };
-  //   case CAT_ACTION_TYPES.FETCH_CATEGORY_REJECT:
-  //     return {
-  //       ...state,
-  //       isLoading: false,
-  //       error: action.payload,
-  //     };
-
-  //   default:
-  //     return state;
