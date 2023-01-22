@@ -1,10 +1,12 @@
 import React, { ChangeEvent, FC, FormEvent, useState } from "react";
-import { authWithEmailPass, authDocument } from "../../assets/firebase/firebase";
+import { AuthError, AuthErrorCodes } from "firebase/auth";
+import { useDispatch } from "react-redux";
+
+import { signUpStart } from "../../assets/redux/user/user-action";
+
 import InputForm from "./InputForm";
 import Btn from "../tools/Btn";
 import styled from "styled-components";
-import { FieldTempType } from "./SignIn";
-import { AuthError, AuthErrorCodes } from "firebase/auth";
 
 const SignUpWrap = styled.section`
     display: flex;
@@ -16,7 +18,7 @@ const SignUpWrap = styled.section`
     }
 `
 
-const fieldTemplate: FieldTempType = {
+const fieldTemplate = {
   displayName: "",
   email: "",
   password: "",
@@ -26,6 +28,7 @@ const fieldTemplate: FieldTempType = {
 const SignUp: FC = () => {
   const [fields, setFields] = useState(fieldTemplate);
   const { displayName, email, password, confirm } = fields;
+  const dispatch = useDispatch();
 
   const resetFields = () => setFields(fieldTemplate);
 
@@ -36,23 +39,20 @@ const SignUp: FC = () => {
       alert("Your passwords did not match!");
       return;
     }
+    
     try {
 
-      const getUser = await authWithEmailPass(email, password);
-      const user = getUser?.user;
-      if (user) {
-        await authDocument(user, { displayName });
-      } else {
-          // handle the case where user is undefined or null
-          console.error("User is not defined or null.");
-      }
+      dispatch(signUpStart(email, password, displayName))
       resetFields();
+    
     } catch (error) {
+
       if ((error as AuthError).code === AuthErrorCodes.EMAIL_EXISTS) {
         alert('Cannot create user, email already in use');
       } else {
         console.error('user creation encountered an error', error);
       }
+
     }
   };
 

@@ -1,17 +1,14 @@
 import React, { ChangeEvent, FC, FormEvent, useState } from "react";
 
 import styled from "styled-components";
-import {
-  signInWithEmailPass,
-  signInWithGooglePopup,
-} from "../../assets/firebase/firebase";
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useCookies } from 'react-cookie';
 import { cookieType } from "../../assets/redux/cookies/cookie-selector";
 
 import Btn from "../tools/Btn";
 import InputForm from "./InputForm";
+import { emailSignInStart, googleSignInStart } from "../../assets/redux/user/user-action";
 
 const SignInWrap = styled.section`
   display: flex;
@@ -24,19 +21,15 @@ const ButtonWrap = styled.div`
   margin: 20px 0;
 `;
 
-export type FieldTempType = {
-  displayName?: string,
-  email?: string,
-  password?: string,
-  confirm?: string
-}
-
-const fieldTemplate: FieldTempType = {
+const fieldTemplate = {
   email: "",
   password: "",
 };
 
 const SignIn: FC = () => {
+
+  const dispatch = useDispatch();
+
   const [fields, setFields] = useState(fieldTemplate);
   const { email, password } = fields;
 
@@ -58,7 +51,7 @@ const SignIn: FC = () => {
   const resetFields = () => setFields(fieldTemplate);
 
   const googleSignIn = async () => {
-    await signInWithGooglePopup();
+    dispatch(googleSignInStart());
   };
 
   const submitChange = async (event: FormEvent<HTMLFormElement>) => {
@@ -66,9 +59,8 @@ const SignIn: FC = () => {
 
     try {
 
-      await signInWithEmailPass(email, password);
+      dispatch(emailSignInStart(email, password));
       setCookiesToBrowser();
-
       resetFields();
 
     } catch (error: any //any because FireBaseError is not exported

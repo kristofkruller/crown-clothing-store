@@ -1,6 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-
+import { Category } from "../redux/categories/category-type";
+import { UserType } from "../redux/user/user-type";
 import { 
   getFirestore, 
   doc, 
@@ -9,7 +10,8 @@ import {
   collection,
   writeBatch,
   query,
-  getDocs
+  getDocs,
+  QueryDocumentSnapshot
 } from "firebase/firestore"
 
 import { 
@@ -20,7 +22,10 @@ import {
   signInWithEmailAndPassword, 
   signOut,
   onAuthStateChanged, 
+  User,
+  NextOrObserver
 } from "firebase/auth";
+import { resolve } from "path";
 
 
 // Your web app's Firebase configuration
@@ -51,7 +56,14 @@ export const signInWithGooglePopup = () => signInWithPopup(auth, googleProvider)
 
 export const db = getFirestore();
 
-export const addCollectionsAndDocs = async (collectionKey, objToAdd) => {
+export type ObjectToAdd = {
+  title: string
+} 
+
+export const addCollectionsAndDocs = async <T extends ObjectToAdd> (
+    collectionKey: string, 
+    objToAdd: T[]
+  ): Promise<void> => {
   const collectionRef = collection(db, collectionKey);
   const batch = writeBatch(db);
 
@@ -63,51 +75,74 @@ export const addCollectionsAndDocs = async (collectionKey, objToAdd) => {
   await batch.commit();
 }
 
-export const getCatAndDocs = async () => {
+export const getCatAndDocs = async (): Promise<Category[]> => {
   const collectionRef = collection(db, "categories");
   const q = query(collectionRef);
 
   const qSnapShot = await getDocs(q);
 
   return qSnapShot.docs.map(doc =>
-    doc.data()
+    doc.data() as Category
   );
 
 }
+
 // takes the user as userAuth, and takes the displayName at signup as additionalVal to replace null
 
-export const authDocument = async (userAuth, additionalVal = {}) => {
-    if (!userAuth) return;
-
-    const userDocRef = doc(db, "users", userAuth.uid);
-    const userSnapshot = await getDoc(userDocRef);
-
-    if (!userSnapshot.exists()) {
-        //destruct from user
-        const { displayName, email} = userAuth;
-        const createdAt = new Date();
-
-        try {
-            await setDoc(userDocRef, {
-                displayName, email, createdAt, ...additionalVal
-            });
-        } catch (error) {
-            console.error('Creating user failed',error);
-        }
-    }
+export type AdditionalInfo = {
+  displayName?: string
 }
 
-export const authWithEmailPass = async (email, password) => {
+export const authDocument = async (
+    userAuth: User, 
+    additionalVal = {} as AdditionalInfo
+  ): Promise<void | QueryDocumentSnapshot<UserType>> => 
+{
+  if (!userAuth) return;
+
+  const userDocRef = doc(db, "users", userAuth.uid);
+  const userSnapshot = await getDoc(userDocRef);
+
+  if (!userSnapshot.exists()) {
+    //destruct from user
+    const { displayName, email} = userAuth;
+    const createdAt = new Date();
+
+    try {
+      await setDoc(userDocRef, {
+        displayName, email, createdAt, ...additionalVal
+      });
+    } catch (error) {
+      console.error('Creating user failed', error);
+    }
+  }
+
+  return userSnapshot as QueryDocumentSnapshot<UserType>;
+}
+
+export const authWithEmailPass = async (email: string, password: string) => {
     if(!email || !password) return;
 
     return await createUserWithEmailAndPassword( auth, email, password );
 }
 
-export const signInWithEmailPass = async ( email, password ) => {
+export const signInWithEmailPass = async ( email: string, password:string ) => {
     if(!email || !password) return;
 
     return await signInWithEmailAndPassword( auth, email, password );
 }
 
 export const signOutUser = () => signOut(auth);
-export const authStateObserver = callback => onAuthStateChanged(auth, callback);
+export const authStateObserver = (callback: NextOrObserver<User>) => onAuthStateChanged(auth, callback);
+
+export const getCurrentUser = (): Promise<User | null> => {
+  return new Promise((resolve, reject) => {
+    const unsubscribe = onAuthStateChanged(
+      auth,
+      (userAuth) => {
+        unsubscribe();
+        resolve(userAuth);
+      }
+    )
+  })
+}

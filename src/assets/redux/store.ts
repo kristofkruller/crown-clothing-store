@@ -6,16 +6,11 @@ import persistReducer from "redux-persist/es/persistReducer";
 import persistStore from "redux-persist/es/persistStore";
 import storage from "redux-persist/lib/storage";
 
-
 import { rootReducer } from "./root-reducer";
 
+export type RootState = ReturnType<typeof rootReducer>;
+
 // root reducer
-
-const middleWares = [
-  process.env.NODE_ENV !== 'production' && logger,
-  thunk,
-].filter(Boolean);
-
 
 // import { compose, applyMiddleware } from "redux";
 // const enhancers = compose(applyMiddleware(...middleWares)); compose n applymiddleware no longer valid with configureStore
@@ -26,6 +21,11 @@ const persistConfig = {
   whitelist: ["cart", "cookies"]
 }
 const persistedReducer = persistReducer(persistConfig, rootReducer);
+
+const middleWares = [
+  process.env.NODE_ENV !== 'production' && logger,
+  thunk,
+].filter(Boolean);
 
 export const store = configureStore({
   reducer: persistedReducer,

@@ -1,4 +1,4 @@
-import { CatArrayItem, Category } from "../categories/category-type"
+import { CatArrayItem } from "../categories/category-type"
 
 export enum CART_ACTION_TYPES {
   SET_OPEN = "SET_OPEN",
@@ -7,5 +7,5 @@ export enum CART_ACTION_TYPES {
 
 export type CartItems = {
   quantity: number,
-  totalVal: number
+  totalVal?: number
 } & CatArrayItem

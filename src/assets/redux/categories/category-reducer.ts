@@ -4,7 +4,7 @@ import { Category } from "./category-type";
 import { rejectFetchCategories, resolveFetchCategories, startFetchCategories } from "./category-action"
 
 export type InitState = {
-  readonly categoriesMap: Category[];
+  readonly categoriesMap?: Category[];
   readonly isLoading: boolean;
   readonly error: Error | null;
 }
