@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC, FormEvent, useState } from "react";
+import React, { ChangeEvent, FormEvent, useState } from "react";
 
 import styled from "styled-components";
 
@@ -26,7 +26,7 @@ const fieldTemplate = {
   password: "",
 };
 
-const SignIn: FC = () => {
+const SignIn = () => {
 
   const dispatch = useDispatch();
 

@@ -68,7 +68,7 @@ const ButtonTypes: BtnTypes = {
 }
 type ButtonProps = {
   children?: ReactNode,
-  buttonType: string, 
+  buttonType?: string, 
   isLoading?: boolean,
 } & ButtonHTMLAttributes<HTMLButtonElement>
 

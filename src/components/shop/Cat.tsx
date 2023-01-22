@@ -21,10 +21,14 @@ const CatWrap = styled.section`
     row-gap: 15px;
   }
 `
+//HAVE TO CAST PARAMS
+type CatRouteParams = {
+  category: string;
+}
 
 const Cat = () => {
 
-  const { category } = useParams()
+  const { category } = useParams<keyof CatRouteParams>() as CatRouteParams;
 
   const categoriesMap = useSelector(catSelectorMap)
   const loading = useSelector(categoriesLoading)

@@ -2,7 +2,6 @@ import React, { useCallback } from 'react'
 
 import { Outlet, Link } from 'react-router-dom'
 import styled from 'styled-components';
-import { signOutUser } from '../assets/firebase/firebase';
 
 import {ReactComponent as Logo} from "../assets/crown.svg"
 import CartIcon from './cart/CartIcon';
@@ -12,6 +11,8 @@ import { setOpen } from '../assets/redux/cart/cart-action'
 import { useDispatch, useSelector } from 'react-redux';
 import CookieConsent from './CookieConsent';
 import { openSelector } from '../assets/redux/cart/cart-selector';
+import { selectCurrentUser } from '../assets/redux/user/user-selector';
+import { signOutStart } from '../assets/redux/user/user-action';
 
 const Nav = styled.section`
     height: 70px;
@@ -41,18 +42,15 @@ const Nav = styled.section`
 `
 
 const Navigation = () => {
-
-  const user = useSelector(state => state.user.user)
-  const open = useSelector(openSelector);
   const dispatch = useDispatch();
+  const user = useSelector(selectCurrentUser)
+  const open = useSelector(openSelector);
 
   const dropDorwnHandler = useCallback(() => {
     open && dispatch(setOpen(!open));
   }, [open]);
 
-  const signOutUserHandler = async () => {
-    await signOutUser();
-  }
+  const signOutUserHandler = () => dispatch(signOutStart());
 
   return (
     <section onClick={dropDorwnHandler}>

@@ -8,34 +8,24 @@ import { rejectFetchCategories, resolveFetchCategories, startFetchCategories } f
 import { getCatAndDocs } from '../assets/firebase/firebase'
 
 const Shop = () => {
-  
-  const fetchCategoryAsync = () => {
-
-    return async (dispatch) => {
-  
-      dispatch(startFetchCategories());
-  
-      try {
-  
-        const data = await getCatAndDocs();
-  
-        dispatch(resolveFetchCategories(data));
-        console.log(data)
-  
-      } catch (error) {
-  
-        dispatch(rejectFetchCategories(error));
-  
-      }
-  
-    }
-  }
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchCategoryAsync())
-  }, [])
+
+    const Fetch = async(): Promise<void> => {
+      dispatch(startFetchCategories());
+      try {
+        const data = await getCatAndDocs();
+        dispatch(resolveFetchCategories(data));
+      } catch (error: any) {
+        dispatch(rejectFetchCategories(error));
+      }
+    }
+
+    Fetch();
+  }, []);
+
 
   return (
     <Routes>

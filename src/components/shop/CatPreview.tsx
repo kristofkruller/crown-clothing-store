@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { FC } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
+import { CatArrayItem } from '../../assets/redux/categories/category-type'
 
 import ProductCard from './ProductCard'
 
@@ -22,8 +23,12 @@ const CatPrevWrap = styled.section`
   }
 `
 
+type CatPreviewProps = {
+  title: string;
+  products: CatArrayItem[];
+}
 
-const CatPreview = ({ title, products }) => {
+const CatPreview: FC<CatPreviewProps> = ({ title, products }) => {
   return (
     <CatPrevWrap>
       <h2>

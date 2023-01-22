@@ -1,10 +1,10 @@
-import React from 'react'
+import React, { FC } from 'react'
 import styled from 'styled-components'
 import Btn from '../tools/Btn'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { cartItemsSelector } from '../../assets/redux/cart/cart-selector'
-import { addToCart } from '../../assets/redux/cart/cart-action'
-import useUpdateCartItems from '../../assets/redux/cart/hooks/useUpdateCartItems'
+import { addItemToCart } from '../../assets/redux/cart/cart-action'
+import { CatArrayItem } from '../../assets/redux/categories/category-type'
 
 const ShopWrap = styled.section`
   width: 100%;
@@ -57,21 +57,18 @@ const ShopWrap = styled.section`
     }
   }
 `
-const ProductCard = ({ product }) => {
 
+type ProductCardProps = {
+  product: CatArrayItem;
+}
+
+const ProductCard: FC<ProductCardProps> = ({ product }) => {
+  const dispatch = useDispatch();
   const { name, price, imageUrl } = product;
-  
+
   const cartItems = useSelector(cartItemsSelector);
 
-  const updateCartItems = useUpdateCartItems();
-
-  const addTo = () => {
-
-    const newCartItems = addToCart(cartItems, product);
-
-    updateCartItems(newCartItems)
-
-  }
+  const addTo = () => dispatch(addItemToCart(cartItems, product));
 
   return (
    

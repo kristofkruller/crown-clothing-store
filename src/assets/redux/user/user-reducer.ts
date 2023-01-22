@@ -1,4 +1,4 @@
-import { USER_ACTION_TYPES, UserType } from "./user-type";
+import { UserType } from "./user-type";
 import { AnyAction } from "redux";
 import {
   signInFailed,
@@ -7,11 +7,12 @@ import {
   signOutSuccess,
   signInSuccess,
 } from './user-action';
-import { InitState } from "../categories/category-reducer";
 
 export type InitUser = {
-  user: null | UserType;
-} & InitState;
+  user: UserType | null,
+  isLoading: boolean,
+  error: Error | null
+}
 
 export const initialUser: InitUser = {
   user: null,

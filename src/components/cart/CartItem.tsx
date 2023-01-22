@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { FC } from 'react'
 
 import styled from 'styled-components';
+import { CartItems } from '../../assets/redux/cart/cart-type';
 
 const ItemConti = styled.div`
   width: 100%;
@@ -26,7 +27,11 @@ const ItemConti = styled.div`
   }
 `
 
-const CartItem = ({ item }) => {
+type CartItemProps = {
+  item: CartItems;
+}
+
+const CartItem: FC<CartItemProps> = ({ item }) => {
  
   const { imageUrl, price, name, quantity } = item;
   

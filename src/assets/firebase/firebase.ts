@@ -25,8 +25,6 @@ import {
   User,
   NextOrObserver
 } from "firebase/auth";
-import { resolve } from "path";
-
 
 // Your web app's Firebase configuration
 const firebaseConfig = {

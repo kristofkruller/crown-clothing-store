@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { FormEvent, useState } from 'react'
 import styled from 'styled-components'
 
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js'
@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 import { totalValSelector } from '../../assets/redux/cart/cart-selector';
 
 import Btn from '../tools/Btn'
+import { selectCurrentUser } from '../../assets/redux/user/user-selector';
 
 export const PaymentFormContainer = styled.div`
   height: 300px;
@@ -31,11 +32,11 @@ const Payment = () => {
   const stripe = useStripe();
   const elements = useElements();
   const amount = useSelector(totalValSelector);
-  const currentUser = useSelector(state => state.user.user);
+  const currentUser = useSelector(selectCurrentUser);
 
   const [isLoading, setLoading] = useState(false);
 
-  const paymentHandler = async (e) => {
+  const paymentHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if(!stripe || !elements) return;
@@ -52,9 +53,13 @@ const Payment = () => {
 
     const clientSecret = response.paymentIntent.client_secret;
 
+    const cardDetails = elements.getElement(CardElement);
+
+    if (cardDetails === null) return;
+
     const paymentResult = await stripe.confirmCardPayment(clientSecret, {
       payment_method: {
-        card: elements.getElement(CardElement),
+        card: cardDetails,
         billing_details: {
           name: currentUser ? currentUser.displayName : 'Guest',
         },

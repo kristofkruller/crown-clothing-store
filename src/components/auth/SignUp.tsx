@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC, FormEvent, useState } from "react";
+import React, { ChangeEvent, FormEvent, useState } from "react";
 import { AuthError, AuthErrorCodes } from "firebase/auth";
 import { useDispatch } from "react-redux";
 
@@ -25,7 +25,7 @@ const fieldTemplate = {
   confirm: "",
 };
 
-const SignUp: FC = () => {
+const SignUp = () => {
   const [fields, setFields] = useState(fieldTemplate);
   const { displayName, email, password, confirm } = fields;
   const dispatch = useDispatch();

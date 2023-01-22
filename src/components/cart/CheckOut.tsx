@@ -4,9 +4,11 @@ import styled from 'styled-components';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { cartItemsSelector, totalValSelector } from '../../assets/redux/cart/cart-selector';
-import { addToCart, decreaseCartQty, removeCartQty } from '../../assets/redux/cart/cart-action';
+import { addItemToCart, removeItemFromCart, clearItemFromCart } from '../../assets/redux/cart/cart-action';
 
 import Payment from '../payment/Payment';
+import { CartItems } from '../../assets/redux/cart/cart-type';
+import { CatArrayItem } from '../../assets/redux/categories/category-type';
 
 const Wrapper = styled.section`
   width: 55%;
@@ -85,11 +87,11 @@ const CheckOut = () => {
   const cartItems = useSelector(cartItemsSelector);
   const totalVal = useSelector(totalValSelector);
 
-  const infuseItem = (itemToAdd) => dispatch(addToCart(cartItems, itemToAdd))
+  const infuseItem = (itemToAdd: CatArrayItem) => dispatch(addItemToCart(cartItems, itemToAdd))
   
-  const defuseItem = (itemToRem) => dispatch(decreaseCartQty(cartItems, itemToRem))
+  const defuseItem = (itemToRem: CartItems) => dispatch(removeItemFromCart(cartItems, itemToRem))
   
-  const clearOut = (toClear) => dispatch(removeCartQty(cartItems, toClear))
+  const clearOut = (toClear: CartItems) => dispatch(clearItemFromCart(cartItems, toClear))
 
   return (
 
