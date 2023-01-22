@@ -1,21 +1,27 @@
 import { configureStore } from "@reduxjs/toolkit";
 import logger from "redux-logger";
 import thunk from "redux-thunk";
-
-import persistReducer from "redux-persist/es/persistReducer";
-import persistStore from "redux-persist/es/persistStore";
+import { Middleware } from "@reduxjs/toolkit";
+import { persistReducer, persistStore, PersistConfig } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
 import { rootReducer } from "./root-reducer";
 
 export type RootState = ReturnType<typeof rootReducer>;
 
+// declare global {
+//   interface Window {
+
+//   }
+// }
+
 // root reducer
 
-// import { compose, applyMiddleware } from "redux";
-// const enhancers = compose(applyMiddleware(...middleWares)); compose n applymiddleware no longer valid with configureStore
+type ExtendedPersistConfig = PersistConfig<RootState> & {
+  whitelist: (keyof RootState)[]
+}
 
-const persistConfig = {
+const persistConfig: ExtendedPersistConfig = {
   key: "root",
   storage: storage,
   whitelist: ["cart", "cookies"]
@@ -25,7 +31,7 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 const middleWares = [
   process.env.NODE_ENV !== 'production' && logger,
   thunk,
-].filter(Boolean);
+].filter((middleware): middleware is Middleware => Boolean(middleware));
 
 export const store = configureStore({
   reducer: persistedReducer,
