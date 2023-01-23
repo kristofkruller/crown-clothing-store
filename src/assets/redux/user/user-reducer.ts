@@ -1,17 +1,10 @@
-import { UserType } from "./user-type";
 import { AnyAction } from "redux";
-import {
-  signInFailed,
-  signUpFailed,
-  signOutFailed,
-  signOutSuccess,
-  signInSuccess,
-} from './user-action';
+import { USER_ACTION_TYPES, UserType } from "./user-type";
 
 export type InitUser = {
   user: UserType | null,
-  isLoading: boolean,
-  error: Error | null
+  isLoading?: boolean,
+  error?: Error | null
 }
 
 export const initialUser: InitUser = {
@@ -22,22 +15,10 @@ export const initialUser: InitUser = {
 
 export const userReducer = (state = initialUser, action = {} as AnyAction) => {
 
-  if (signInSuccess.match(action)) {
-    return { ...state, user: action.payload };
+  switch (action.type) {
+    case USER_ACTION_TYPES.SET_USER:
+      return { ...state, user: action.payload };
+    default:
+      return state;
   }
-
-  if (signOutSuccess.match(action)) {
-    return { ...state, user: null };
-  }
-
-  if (
-    signInFailed.match(action) ||
-    signUpFailed.match(action) ||
-    signOutFailed.match(action)
-  ) {
-    return { ...state, error: action.payload };
-  }
-
-  return state;
-
-}; 
+};

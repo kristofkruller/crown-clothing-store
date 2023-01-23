@@ -1,4 +1,5 @@
 import React, { useCallback } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 
 import { Outlet, Link } from 'react-router-dom'
 import styled from 'styled-components';
@@ -8,11 +9,11 @@ import CartIcon from './cart/CartIcon';
 import CartDropDown from './cart/CartDropDown';
 
 import { setOpen } from '../assets/redux/cart/cart-action'
-import { useDispatch, useSelector } from 'react-redux';
 import CookieConsent from './CookieConsent';
+
 import { openSelector } from '../assets/redux/cart/cart-selector';
 import { selectCurrentUser } from '../assets/redux/user/user-selector';
-import { signOutStart } from '../assets/redux/user/user-action';
+import { signOutUser } from '../assets/firebase/firebase';
 
 const Nav = styled.section`
     height: 70px;
@@ -50,8 +51,6 @@ const Navigation = () => {
     open && dispatch(setOpen(!open));
   }, [open]);
 
-  const signOutUserHandler = () => dispatch(signOutStart());
-
   return (
     <section onClick={dropDorwnHandler}>
         <Nav className='navigation'>
@@ -63,7 +62,7 @@ const Navigation = () => {
                     SHOP
                 </Link>
                 {user ? 
-                  <span className='nav-link' onClick={signOutUserHandler}> SIGN OUT</span> 
+                  <span className='nav-link' onClick={signOutUser}> SIGN OUT</span> 
                   :
                   <Link className='nav-link' to='/auth'>
                       SIGN IN

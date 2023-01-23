@@ -8,7 +8,7 @@ import { cookieType } from "../../assets/redux/cookies/cookie-selector";
 
 import Btn from "../tools/Btn";
 import InputForm from "./InputForm";
-import { emailSignInStart, googleSignInStart } from "../../assets/redux/user/user-action";
+import { signInWithEmailPass, signInWithGooglePopup } from "../../assets/firebase/firebase";
 
 const SignInWrap = styled.section`
   display: flex;
@@ -51,7 +51,7 @@ const SignIn = () => {
   const resetFields = () => setFields(fieldTemplate);
 
   const googleSignIn = async () => {
-    dispatch(googleSignInStart());
+    await signInWithGooglePopup();
   };
 
   const submitChange = async (event: FormEvent<HTMLFormElement>) => {
@@ -59,7 +59,7 @@ const SignIn = () => {
 
     try {
 
-      dispatch(emailSignInStart(email, password));
+      signInWithEmailPass(email, password);
       setCookiesToBrowser();
       resetFields();
 
